@@ -1,0 +1,28 @@
+lass Solution {
+    public int maxSizeSlices(int[] slices) {
+        int len=slices.length;
+        int m=len/3;
+        
+        int[] slices1=Arrays.copyOfRange(slices,0,len-1);
+        int[] slices2=Arrays.copyOfRange(slices,1,len);
+        
+        return Math.max(helper(slices1,len,m),helper(slices2,len,m));
+        
+    }
+    
+    private int helper(int[] array, int len, int m){
+        if(len==0) return 0;
+        int[][] dp=new int[len][m+1];
+        
+        dp[1][1]=array[0];
+        
+        for(int i=2;i<len;i++){
+            for(int j=1;j<=m;j++){
+                dp[i][j]=Math.max(dp[i-1][j], dp[i-2][j-1]+array[i-1]);
+            }
+        }
+        
+        return dp[len-1][m];
+        
+    }
+}
