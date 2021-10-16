@@ -1,0 +1,45 @@
+class Solution {
+    public int minCostII(int[][] costs) {
+        int housenum=costs.length;
+        int colornum=costs[0].length;
+        if(housenum==0 || colornum==0) return 0;
+        
+        int[][] dp=new int[housenum][colornum];
+        for(int j=0;j<colornum;j++){
+            dp[0][j]=costs[0][j];
+        }
+        
+        if(housenum==1) 
+            return findmin(dp[0],-1);
+        
+        for(int i=1;i<housenum;i++){
+            for(int j=0;j<colornum;j++){
+                dp[i][j]=findmin(dp[i-1],j)+costs[i][j];
+            }
+        }
+        
+        
+        //dp[i][j];;; the house i, paint color j, smalleset number 
+        
+        //min of the house[i-1],paint color that is not [0 j-1] [j+1, color num]
+        
+        
+        return findmin(dp[housenum-1],-1);
+        
+        
+    }
+    
+    private int findmin(int[] housecost, int cur){
+        int len=housecost.length;
+        int cost=Integer.MAX_VALUE;
+        
+        for(int i=0;i<len;i++){
+            if(i==cur) continue;
+            else 
+              cost=Math.min(cost,housecost[i]);
+            
+        }
+        
+        return cost;
+    }
+}
