@@ -1,0 +1,23 @@
+class Solution {
+    public int deleteAndEarn(int[] nums) {
+        int[] counts=new int[10001];
+        for(int num:nums){
+            counts[num]+=num;
+        }
+        
+        return helper(counts);
+    }
+    
+    private int helper(int[] counts){
+        int[] dp=new int[10001];
+        dp[0]=counts[0];
+        dp[1]=Math.max(counts[0],counts[1]);
+        
+        for(int i=2;i<=10000;i++){
+            dp[i]=Math.max(dp[i-2]+counts[i],dp[i-1]);
+        }
+        
+        return dp[10000];
+        
+    }
+}
