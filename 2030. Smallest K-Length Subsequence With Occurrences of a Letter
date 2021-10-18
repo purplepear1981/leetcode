@@ -1,0 +1,32 @@
+class Solution {
+    public String smallestSubsequence(String s, int k, char letter, int r) {
+        int count= 0;
+        int len=s.length();
+        for (int i = 0; i < len; i++)
+            if (s.charAt(i) == letter)
+                count ++;
+        
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < len; i++) {
+            char cur = s.charAt(i);
+            while (!stack.isEmpty() && stack.peek() > cur && (len - i + stack.size() > k) && (stack.peek() != letter || count > r)) {
+                if (stack.pop() == letter) r ++;
+            }
+            
+            if (stack.size() < k) {
+                if (cur == letter) {
+                    stack.push(cur);
+                    r --;
+                } else if (k - stack.size() > r) {
+                    stack.push(cur);
+                }
+            }
+            
+            if (cur == letter) count --;
+        }
+        
+        StringBuilder sb = new StringBuilder(stack.size());
+        for(Character a : stack) sb.append(a);
+        return sb.toString();
+    }
+}
