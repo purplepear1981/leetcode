@@ -1,0 +1,33 @@
+class Solution {
+    public int longestArithSeqLength(int[] nums) {
+        int n=nums.length;
+        int[][] dp=new int[n][n];
+        int[] map=new int[2001];
+        Arrays.fill(map,-1);
+      //  map[nums[0]]=0;
+        
+        for(int i=0;i<n;i++)
+            Arrays.fill(dp[i],2);
+        
+        int max=2;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                int tmp=nums[i]*2-nums[j];
+       //         System.out.print(tmp);
+         //       System.out.print(" ");
+                if(tmp>=0 && map[tmp]!=-1){
+                    int k=map[tmp];
+                    dp[i][j]=dp[k][i]+1;
+             //      System.out.print(dp[i][j]);
+                    max=Math.max(max,dp[i][j]);
+                }}
+               
+                map[nums[i]]=i;
+            
+            
+        }
+        
+        return max;
+        
+    }
+}
