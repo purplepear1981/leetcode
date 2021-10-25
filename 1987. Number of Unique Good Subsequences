@@ -1,0 +1,44 @@
+class Solution {
+    public int numberOfUniqueGoodSubsequences(String binary) {
+        int mod=1000000007;
+        int n=binary.length();
+        
+        int[] dp=new int[n+1];
+        
+        String s='#'+binary;
+        
+        int m=1;
+        for(int i=1;i<=n;i++){
+            if(s.charAt(i)=='0'){
+                m=m+1;
+            }
+            if(s.charAt(i)=='1'){
+                m=i;
+                break;
+            }
+        }
+        if(m==n+1) return 1;
+        if(m==n && n>1) return 2;
+        dp[m]=1;
+        
+        int index0=0;
+        int index1=0;
+        
+        for(int i=m+1;i<=n;i++){
+            dp[i]=((dp[i-1]*2)%mod-((s.charAt(i)=='0')?dp[(index0-1)>0?(index0-1):0]:dp[(index1-1)>0?(index1-1):0])+mod)%mod;
+            if(s.charAt(i)=='0')
+                index0=i;
+            else
+                index1=i;
+        }
+        
+        if(s.contains("0"))
+        return dp[n]+1;
+        else
+        return dp[n];
+        
+            
+            
+        }
+        
+    }
